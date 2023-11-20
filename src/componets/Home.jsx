@@ -1,6 +1,6 @@
 import React from 'react'
 import happy from '../assets/happy.jpg'
-import Product from './Product'
+import Product from './Products'
 
 
 const Home = () => {
