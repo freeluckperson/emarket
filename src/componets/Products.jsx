@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
 
@@ -32,17 +31,8 @@ const Products = () => {
     const Loading = () => {
         return (
             <>
-                <div className="col-md-3">
-                    <Skeleton height={350} />
-                </div>
-                <div className="col-md-3">
-                    <Skeleton height={350} />
-                </div>
-                <div className="col-md-3">
-                    <Skeleton height={350} />
-                </div>
-                <div className="col-md-3">
-                    <Skeleton count={350} />
+                <div className="spinner-border" role="status">
+                    <span className="overflow-x-hidden">Loading...</span>
                 </div>
             </>
         )

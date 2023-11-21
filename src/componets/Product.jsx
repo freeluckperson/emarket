@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Skeleton from 'react-loading-skeleton';
 import { Link, useParams } from 'react-router-dom'
+
 
 
 
@@ -25,7 +25,9 @@ const Product = () => {
     const Loading = () => {
         return (
             <>
-                <Skeleton />
+                <div className="spinner-border" role="status">
+                    <span className="overflow-x-hidden">Loading...</span>
+                </div>
             </>
         )
     }
