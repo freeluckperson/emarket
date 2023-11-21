@@ -7,6 +7,7 @@ import Product from './componets/Product'
 
 
 import { Routes, Route } from 'react-router-dom'
+import Footer from './componets/Footer'
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/products' element={<Products />} />
         <Route path='/products/:id' element={<Product />} />
       </Routes>
+      <Footer />
     </>
   )
 }

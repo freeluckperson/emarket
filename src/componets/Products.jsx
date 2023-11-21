@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Products = () => {
     const [data, setData] = useState(null);
     const [filter, setFilter] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     let componenMounted = true
 
@@ -38,12 +38,32 @@ const Products = () => {
         )
     }
 
-    const filterProduct = cat => {
-        const updateList = data.filter(product => product.category === cat)
-        setFilter(updateList)
-    }
+
+    const filterProduct = (cat, sortCriteria) => {
+        let updateList = data.filter(product => product.category === cat);
+        if (sortCriteria === 'priceLowToHigh') {
+            updateList = updateList.sort((a, b) => a.price - b.price);
+        } else if (sortCriteria === 'priceHighToLow') {
+            updateList = updateList.sort((a, b) => b.price - a.price);
+        } else if (sortCriteria === 'ratingLowToHigh') {
+            updateList = updateList.sort((a, b) => a.rating.rate - b.rating.rate);
+        } else if (sortCriteria === 'ratingHighToLow') {
+            updateList = updateList.sort((a, b) => b.rating.rate - a.rating.rate);
+        }
+        setFilter(updateList);
+    };
+
+
+
 
     const ShowProducts = () => {
+        const [sortCriteria, setSortCriteria] = useState(null);
+
+        const handleSort = (criteria) => {
+            setSortCriteria(criteria);
+            filterProduct(filter[0].category, criteria);
+        };
+
         return (
             <>
                 <div className="buttons d-flex justify-content-center mb-5 pb-5">
@@ -52,25 +72,33 @@ const Products = () => {
                     <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("women's clothing")}>Women's Clothing</button>
                     <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
                     <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("electronics")}>Electronic</button>
+                    <div className="dropdown">
+                        <button className="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sort By
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><button className="dropdown-item" onClick={() => handleSort('priceLowToHigh')}>Price: Low to High</button></li>
+                            <li><button className="dropdown-item" onClick={() => handleSort('priceHighToLow')}>Price: High to Low</button></li>
+                            <li><button className="dropdown-item" onClick={() => handleSort('ratingLowToHigh')}>Rating: Low to High</button></li>
+                            <li><button className="dropdown-item" onClick={() => handleSort('ratingHighToLow')}>Rating: High to Low</button></li>
+                        </ul>
+                    </div>
                 </div >
                 {filter?.map((product, i) => (
-                    <>
-                        <div className="col-md-3 mb-4" key={i}>
-                            <div className="card h-100 text-center p-4" >
-                                <img src={product.image} height={'250px'} className="card-img-top " alt={product.title} />
-                                <div className="card-body">
-                                    <h5 className="card-title mb-0">{product.title.substring(0, 12)}...</h5>
-                                    <p className="card-text lead-fw-bold">{product.price} $</p>
-                                    <Link to={`/products/${product.id}`} className="btn btn-outline-dark">Buy Now</Link>
-                                </div>
+                    <div className="col-md-3 mb-4" key={i}>
+                        <div className="card h-100 text-center p-4" >
+                            <img src={product.image} height={'250px'} className="card-img-top " alt={product.title} />
+                            <div className="card-body">
+                                <h5 className="card-title mb-0">{product.title.substring(0, 12)}...</h5>
+                                <p className="card-text lead-fw-bold">{product.price} $</p>
+                                <Link to={`/products/${product.id}`} className="btn btn-outline-dark">Buy Now</Link>
                             </div>
                         </div>
-                    </>
-
+                    </div>
                 ))}
             </>
         )
-    }
+    };
 
     return (
         <div>
@@ -91,3 +119,5 @@ const Products = () => {
 }
 
 export default Products
+
+

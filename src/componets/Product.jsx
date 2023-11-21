@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { addCart } from './redux/actions';
 import { Link, useParams } from 'react-router-dom'
+
 
 
 
@@ -9,6 +12,12 @@ const Product = () => {
     const [loading, setLoading] = useState(false);
     const { id } = useParams()
 
+    const dispatch = useDispatch()
+
+    const addProduct = (product) => {
+        dispatch(addCart(product))
+    }
+
 
     useEffect(() => {
         setLoading(true);
@@ -17,7 +26,7 @@ const Product = () => {
             .then(data => {
                 setProduct(data);
                 setLoading(false);
-                console.log(data);
+                // console.log(data);
             })
             .catch(error => { throw new Error(error.message) });
     }, [id]);
@@ -46,7 +55,7 @@ const Product = () => {
                     </p>
                     <h3 className='display-6 fw-bolder my-4'>{product.price} $</h3>
                     <p className='lead'>{product.description}</p>
-                    <button className='btn btn-outline-dark mx-2'>Add To Card</button>
+                    <button className='btn btn-outline-dark mx-2' onClick={() => addProduct(product)}>Add To Card</button>
                     <Link className='btn btn-outline-dark ' to='/cart'>Go To Card</Link>
                 </div>
             </>

@@ -1,9 +1,12 @@
 import React from 'react'
-import { Link, NavLink,  } from 'react-router-dom'
+import { Link, } from 'react-router-dom'
+import Cart from './Cart'
+
 
 
 
 const Navbar = () => {
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-bg-white py-3 shadow-sm">
             <div className="container">
@@ -26,12 +29,12 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/about">
+                            <Link className="nav-link" to="#">
                                 About
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/contact">
+                            <Link className="nav-link" to="#">
                                 Contact
                             </Link>
                         </li>
@@ -40,9 +43,8 @@ const Navbar = () => {
                     <div className="buttons ">
                         <Link to="/login" className="btn btn-outline-dark"><i className="fa fa-sign-in me-1"> Login</i></Link>
 
-                        <Link to="register" className="btn btn-outline-dark ms-2"><i className="fa fa-user-plus me-2"> Register</i></Link>
-
-                        <Link to="cart" className="btn btn-outline-dark m-2"><i className="fa fa-cart-plus me-1"> Cart</i></Link>
+                        <Link to="register" className="btn btn-outline-dark mx-2"><i className="fa fa-user-plus me-2"> Register</i></Link>
+                        <Cart />
                     </div>
                 </div>
             </div>
