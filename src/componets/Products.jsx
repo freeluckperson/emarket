@@ -7,25 +7,41 @@ const Products = () => {
     const [filter, setFilter] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    let componenMounted = true
+    // let componenMounted = true
 
     useEffect(() => {
         setLoading(true)
-        const getProduts = async () => {
-            setLoading(true);
-            const response = await fetch('https://fakestoreapi.com/products');
-            if (componenMounted) {
-                setData(await response.clone().json())
-                setFilter(await response.json())
-                setLoading(false)
-                // console.log(filter)
-            }
-            return () => {
-                componenMounted = false
-            }
-        };
-        getProduts()
-    }, [])
+        fetch('https://fakestoreapi.com/products')
+            .then(response => response.json())
+            .then(data => {
+                setData(data)
+                setFilter(data)
+                console.log(data)
+            })
+            .catch(error => { throw Error(error.message) })
+            .finally(() => setLoading(false))
+    }, []
+    )
+
+
+
+    // useEffect(() => {
+    //     setLoading(true)
+    //     const getProduts = async () => {
+    //         setLoading(true);
+    //         const response = await fetch('https://fakestoreapi.com/products');
+    //         if (componenMounted) {
+    //             setData(await response.clone().json())
+    //             setFilter(await response.json())
+    //             setLoading(false)
+    //             // console.log(filter)
+    //         }
+    //         return () => {
+    //             componenMounted = false
+    //         }
+    //     };
+    //     getProduts()
+    // }, [])
 
 
     const Loading = () => {
@@ -57,8 +73,6 @@ const Products = () => {
 
 
     const ShowProducts = () => {
-        const [sortCriteria, setSortCriteria] = useState(null);
-
         const handleSort = (criteria) => {
             setSortCriteria(criteria);
             filterProduct(filter[0].category, criteria);
